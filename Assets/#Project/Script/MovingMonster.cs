@@ -55,7 +55,7 @@ public class MovingMonster : Monster
         Debug.DrawRay(start, direction * hitRange, Color.green);
         RaycastHit2D hit = Physics2D.Raycast(start, direction, hitRange);
 
-        if(hit.collider != null) {
+        if(hit.collider != null && !hit.transform.CompareTag("Player")) {
             speed.x *= -1;
         }
  
