@@ -2,18 +2,23 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+
 public class MovingMonster : Monster
 {
+    [Tooltip("Monster speed")]
     public Vector2 speed = Vector2.zero;
 
     private SpriteRenderer spriteRenderer;
 
     public float hitRange = 0.1f;
 
+    private Animator animator;
+
     // Start is called before the first frame update
     void Start()
     {
         spriteRenderer = GetComponent<SpriteRenderer>();
+        animator = GetComponent<Animator>();
     }
 
     // Update is called once per frame
@@ -25,12 +30,24 @@ public class MovingMonster : Monster
         Vector2 direction;
 
         if (speed.x < 0) {
-            spriteRenderer.flipX = true;
+            if(animator != null) {
+                animator.SetBool("right", false);
+            }
+            else { 
+                spriteRenderer.flipX = true;
+            }
+
             start = (Vector2)transform.position + Vector2.left * 0.51f;
             direction = Vector2.left;
         }
-        else { 
-            spriteRenderer.flipX = false;
+        else {
+
+            if (animator != null) {
+                animator.SetBool("right", true);
+            }
+            else { 
+                spriteRenderer.flipX = false;
+            }
             start = (Vector2)transform.position + Vector2.right * 0.51f;
             direction = Vector2.right;
         }
